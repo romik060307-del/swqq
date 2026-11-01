@@ -1,0 +1,49 @@
+OHLI SOCIAL — SOURCE v2.4.0
+==========================
+
+Pembaruan ini menambahkan backend/API dan UI untuk pekerjaan yang sebelumnya belum tersedia pada v2.3.0.
+
+1. KOMENTAR & MODERASI
+- Edit komentar oleh penulis komentar sendiri: POST /api/posts/comments/edit.
+- Hapus komentar oleh penulis komentar atau pemilik postingan: POST /api/posts/comments/delete.
+- Kreator dapat menyalakan/mematikan komentar pada postingan miliknya: POST /api/posts/comments/settings.
+- Server memvalidasi sesi, hak baca postingan, dan kepemilikan sebelum perubahan disimpan.
+- Saat komentar dinonaktifkan, UI mengunci form dan menampilkan keterangan kepada pengguna.
+
+2. KATALOG MUSIK & FAVORIT
+- Upload file audio milik pengguna ke katalog melalui purpose=music.
+- GET /api/music, /api/music/favorites, dan /api/music/detail menyediakan katalog, koleksi pribadi, dan detail audio.
+- POST /api/music/favorites menyimpan atau menghapus favorit; POST /api/music/delete menghapus track milik sendiri yang belum digunakan.
+- Detail audio memperlihatkan postingan/video yang memakai audio tersebut.
+- Endpoint media memeriksa privasi pemilik musik sebelum mengirim file.
+- Metadata audio_id, judul, dan artis disimpan pada postingan video.
+
+3. EKSTRAKSI DAN PENCAMPURAN AUDIO
+- Editor video dapat mengambil trek audio dari file video lokal melalui MediaRecorder/Web Audio.
+- Trek hasil ekstraksi diunggah ke katalog dan dapat langsung dipasang pada video yang sedang diedit.
+- Sebelum video diterbitkan, browser mencoba mencampur suara asli dan musik pilihan melalui Web Audio + captureStream + MediaRecorder.
+- Format hasil mengikuti kemampuan browser: umumnya WebM/Opus pada Chrome/Edge, atau MP4 bila didukung. Tidak ada transcoding paksa MP3/AAC; format hasil dapat berbeda antar browser/perangkat.
+- Browser harus mendukung MediaRecorder, Web Audio, captureStream dan codec rekam yang sesuai. Jika tidak didukung, editor menampilkan pesan error dan unggahan tidak diteruskan.
+
+4. NOTIFIKASI SUKA STORY
+- Suka Story oleh akun lain membuat notifikasi server bertipe story_like.
+- Batal suka tidak membuat notifikasi baru; pemilik Story tidak diberi notifikasi atas suka pada Story miliknya sendiri.
+- Halaman Notifikasi menampilkan aktor, waktu, status baca, dan tautan untuk membuka Story terkait jika masih aktif.
+
+5. PENYIMPANAN & MIGRASI
+- Android menyimpan katalog dan favorit pada file JSON privat aplikasi: ohli-music.json dan ohli-music-favorites.json.
+- Data JSON lama tidak dihapus atau diubah formatnya.
+- database/migrations/002_ohli_comments_music_and_story_likes.sql menambahkan struktur relasional pada skema PostgreSQL referensi. Migrasi ini bukan dijalankan otomatis oleh APK Android.
+- Version Android: versionCode 15, versionName 2.4.0.
+- GitHub Actions memprioritaskan OHLI-Social-Source-v2.4.0.zip.
+
+PENGECEKAN YANG DILAKUKAN
+- node --check app/src/main/assets/ohli-social.js: LULUS.
+- Syntax check script inline index.html: LULUS.
+- Pemeriksaan marker endpoint/backend yang diminta: LULUS.
+- javac tidak dapat menyelesaikan kompilasi Android karena Android SDK dan dependensi Android tidak tersedia di lingkungan ini. Tidak ditemukan diagnostik sintaks Java, tetapi ini bukan pengganti build Gradle.
+- APK dan perilaku nyata browser/perangkat belum diuji. Build final melalui GitHub Actions dan uji di perangkat tetap diperlukan.
+
+CATATAN
+- Jangan unggah file audio yang hak distribusinya tidak kamu miliki.
+- Hasil campuran audio harus diuji di browser target. MediaRecorder dan captureStream tidak didukung secara seragam pada semua browser, terutama beberapa versi Safari/WebView.

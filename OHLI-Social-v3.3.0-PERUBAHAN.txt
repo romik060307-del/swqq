@@ -1,0 +1,22 @@
+OHLI SOCIAL v3.3.0 — PERUBAHAN
+
+1. Tampilan Social + Chat disatukan menjadi mode terang yang tenang, terinspirasi hierarki Instagram: bidang putih, latar abu-abu muda, teks hitam/abu, dan satu aksen biru seperlunya. Override diletakkan setelah tema lama agar skin hitam/teal/gradien yang tersisa tidak menimpa warna baru.
+2. Tipografi menggunakan -apple-system / BlinkMacSystemFont / SF Pro pada iPhone/iPad jika tersedia; perangkat lain menggunakan font sistem (system-ui), Helvetica/Arial sebagai fallback. Font Apple tidak dibundel sebagai file.
+3. Profil diri Chat kini terlihat pada bagian header daftar Chat. Menekannya membuka identitas akun sendiri: nama, nomor Chat, username OHLI Social, bio, dan tombol edit / pintasan ke profil Social. Halaman juga bisa dibuka dari menu Fitur Chat.
+4. Editor profil Chat sekarang mengizinkan nama, username unik OHLI Social, bio, dan foto profil diperbarui melalui API profil yang sudah ada. Nomor sendiri hanya tampil di endpoint /api/me terautentikasi. Nama tampilan Social akun lama yang masih sama dengan nomor dinormalisasi menjadi @username agar tidak bocor sebagai identitas publik.
+5. Pengaturan warna lama yang membuat Social/Chat tidak seragam dihapus dari UI. Mode gelap, Liquid Glass, dan transparansi tema lama dinetralkan agar tidak mengubah palet antarlayar. Preferensi suara, autoplay, anti-zoom, dan ukuran teks tetap tersedia.
+6. Form pembuatan grup sekarang menggabungkan Kontak Chat dan koneksi Social (akun yang diikuti atau yang mengikuti akun pemilik), sehingga teman tidak harus disimpan ulang sebagai kontak Chat. Pilihan dikirim memakai Social ID acak; server memvalidasi hubungan/kontak, akun terdaftar, blokir, duplikasi, dan batas undangan.
+7. Pemilik grup dapat membuka daftar anggota, menambahkan kontak Chat atau koneksi Social kemudian, serta mengeluarkan anggota. GET /api/groups/members mengembalikan Social ID dan username, bukan nomor. POST /api/groups/members memeriksa pemilik grup dan hubungan Social/kontak; anggota yang dikeluarkan kehilangan akses ke ruang grup privat.
+8. Smoke test dua akun ditambah: cek /api/me, simpan kontak, buat grup privat dengan teman terpilih, keluarkan dan tambahkan kembali anggota, cek akses 403, dan pembersihan kontak uji.
+9. Build Android: versionCode 24 / versionName 3.3.0; /health melaporkan 3.3.0; workflow GitHub Actions memprioritaskan OHLI-Social-Source-v3.3.0.zip.
+
+PEMERIKSAAN
+- `node tools/source-verify.mjs`: 64 pemeriksaan statis lulus.
+- `node --check tools/smoke-test.mjs` dan `node --check tools/source-verify.mjs`: lulus.
+- Tes runtime dua akun belum dijalankan karena memerlukan server aktif dan dua akun uji.
+- APK belum dikompilasi dalam lingkungan ini: Android SDK/Gradle tidak tersedia. Jalankan workflow GitHub Actions dan uji di HP.
+
+BATASAN
+- Font SF Pro adalah font sistem Apple dan tidak didistribusikan di ZIP. Di Android/Windows akan digunakan font sistem masing-masing.
+- Grup sekarang mendukung undang/tambah/keluarkan anggota, pesan teks, daftar anggota, dan polling. Reply pesan, lampiran grup, role admin granular, panggilan grup, dan edit/hapus pesan grup masih belum tersedia.
+- Palet warna dibuat konsisten, bukan pilihan tema bebas per halaman. Ukuran teks masih dapat disesuaikan dari pengaturan Chat.

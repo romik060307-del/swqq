@@ -1,0 +1,60 @@
+OHLI SOCIAL v2.9.0 — MOBILE REFACTOR & FITUR SOSIAL
+====================================================
+
+Ringkasan perubahan source dari v2.8.0
+
+1. Profil, username, dan avatar
+- Profil OHLI Social memakai @username; username 3–24 karakter (huruf kecil, angka, titik, garis bawah) divalidasi dan harus unik.
+- Nomor tidak dicetak pada label profil, hasil pencarian, daftar pengikut, permintaan mengikuti, dan elemen identitas publik Social.
+- Profil Chat dan Social dapat memakai foto yang sama atau foto Social terpisah.
+- Foto Social diambil melalui endpoint avatar Social; foto Chat tetap memakai endpoint avatar Chat.
+- Nomor telepon masih dipakai sebagai kunci akun internal oleh sebagian endpoint API lama. Karena itu, perubahan ini menyamarkan nomor pada UI Social, tetapi belum merupakan pemisahan identitas/privasi tingkat protokol. Migrasi ke ID publik acak masih diperlukan sebelum disebut setara platform produksi.
+
+2. Story dan Sorotan
+- Data Story di daftar penonton menyertakan akun unik, total tayangan termasuk replay, frekuensi tayangan per akun, dan daftar akun yang menyukai Story.
+- Modal Story/penonton diberi lapisan tampilan lebih tinggi agar tidak tertutup oleh Story fullscreen di HP.
+- Story dapat dijeda dengan menahan area tengah layar dan dilanjutkan ketika sentuhan dilepas.
+- Lingkaran avatar menunjukkan Story baru/yang sudah dilihat; LIVE memakai indikator merah, termasuk bila Story juga aktif.
+- Sorotan tetap disimpan melalui endpoint server yang sudah ada.
+- Pin dan arsip Story milik teman belum diimplementasikan pada versi ini.
+
+3. Privasi dan status aktif
+- Pengaturan audiens status aktif: semua orang, teman, atau tidak seorang pun.
+- Pengaturan pesan langsung: semua orang, teman, atau tidak seorang pun. Server memeriksa aturan ini pada pengiriman pesan teks, foto, suara, unggahan media untuk pesan, dan inisiasi panggilan.
+- Hak akses akun privat dan daftar sosial tetap diperiksa oleh server.
+
+4. Posting, foto + audio, dan video pendek
+- Editor unggahan foto dapat menyematkan trek musik katalog, selain alur musik video.
+- Posting foto dengan audio mengembalikan media audio dan menyediakan kontrol putar pada kartu posting.
+- Ikon plus tindak-ikuti di avatar Reels diganti dengan indikator merah polos tanpa tanda plus.
+- Tombol Buat tetap berada di bilah navigasi bawah mobile; gaya akhir dibuat lebih sederhana.
+
+5. Grup dan Channel
+- Ruang Grup/Channel dibuka melalui tampilan thread fullscreen, bukan modal kecil.
+- Grup mendukung pesan dan polling 2–6 pilihan; setiap akun hanya dapat memberikan satu suara per polling.
+- Channel merupakan siaran satu arah dari pemilik, dengan reaksi emoji pada posting Channel.
+
+6. Riwayat dan pencarian
+- Riwayat mencatat pencarian, profil yang dibuka, Story, postingan, foto, dan video yang terlihat di feed/Reels.
+- Riwayat dan pencarian terakhir disimpan di localStorage browser/perangkat ini; tidak disinkronkan antardevais dan dapat hilang saat data browser dibersihkan.
+
+Batasan penting — belum boleh dianggap selesai
+- Pesan sekali lihat (1×) pada source lama masih menggunakan penanda pesan dan status seen lokal di browser penerima. Ini belum merupakan konsumsi atomik di server, belum aman lintas perangkat, dan tidak menjamin penerima tidak menyimpan/screenshot media. Jangan gunakan untuk materi sensitif.
+- Pin/arsip Story teman belum tersedia.
+- Riwayat aktivitas tersimpan lokal, bukan riwayat server atau akun lintas perangkat.
+- Data akun Social masih menggunakan nomor sebagai kunci internal di beberapa respons API. Nomor disembunyikan dari label UI Social, tetapi belum dihilangkan dari seluruh payload jaringan.
+- Backend masih penyimpanan file JSON pada satu perangkat Android. Kapasitas, concurrent users, keandalan notifikasi/presence, backup, enkripsi menyeluruh, TURN/SFU untuk LIVE, dan skala layanan memerlukan infrastruktur tambahan.
+- Belum dilakukan uji manual dua akun/dua perangkat untuk semua alur Story, chat, panggilan, grup, dan Channel.
+
+Versi Android:
+- versionCode: 20
+- versionName: 2.9.0
+
+Validasi yang dilakukan pada source:
+- Node.js syntax check untuk file JavaScript Social dan seluruh blok JavaScript inline: berhasil.
+- Node.js syntax check untuk smoke-test script: berhasil (script tidak dijalankan karena memerlukan dua akun nyata dan mengubah data uji).
+- Pemeriksaan pasangan kurung/braces Java dan CSS: lihat hasil pemeriksaan pada catatan build.
+- APK belum dapat dibangun di lingkungan ini karena Gradle dan Android SDK/android.jar tidak tersedia. Gunakan workflow GitHub Actions `Build OHLI Social Server APK` untuk membangun debug APK; keberhasilan workflow tetap harus dikonfirmasi setelah dijalankan.
+
+Catatan pembaruan:
+- Source ini mempertahankan basis project dan data server lama. Cadangkan folder data aplikasi sebelum memasang APK baru.

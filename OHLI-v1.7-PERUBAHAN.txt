@@ -1,0 +1,27 @@
+OHLI Social v1.7
+- Akar bug layout/scroll: class .ohli-stage dan .ohli-card dipakai ganda (skin lama vs UI sosial). Skin lama diganti nama jadi .ohli-svstage/.ohli-lcard/.ohli-lpost.
+  Efeknya: halaman bisa discroll atas-bawah lagi (Beranda, Profil), composer tidak loncat, tampilan HP mengikuti layout laptop.
+- Navigasi bawah HP: 5 tombol tampil benar dan ikut tema gelap.
+- Video pendek: feed layar penuh snap ala TikTok/Reels; putar otomatis saat terlihat, ketuk = putar/jeda, tombol suara, suka/komentar/simpan/bagikan, bar progres.
+- Video di feed & profil: tanpa kontrol bawaan, ketuk untuk putar/jeda.
+- Profil > Media: grid 3 kolom ala Instagram, ketuk untuk membuka.
+BELUM: chat grup, posting Channel, nomor+QR+pemindai kontak, edit/hapus foto & cover profil, tema chat lama.
+
+v1.8 (layout chat WA)
+- Chat laptop = gaya WA Desktop: rel ikon kiri (Chat/Pembaruan/Kontak/Panggilan/Pengaturan), daftar chat, percakapan di kanan.
+- Chat HP = gaya WA HP: layar daftar (bar tab bawah) -> layar percakapan penuh; bar tab disembunyikan saat chat dibuka, kolom ketik selalu terlihat.
+- Penyebab bar hilang: class chat-open tidak pernah dipasang kode lama; sekarang dipasang otomatis.
+- Tombol "OHLI Social" (kembali ke beranda) diberi style; judul "Chat" dan jam pesan terbaca di tema terang/gelap.
+- HP sempit (<=520px): ikon emoji/kecepatan/AI di kolom ketik disembunyikan agar kolom ketik lega.
+
+v1.9
+HP: bar bawah ikon saja (6: Beranda, Video, +, Story, Chat, Profil); bar atas hanya di Beranda & Story; saran akun tampil di HP.
+Beranda ala IG: tab Untuk Kamu/Mengikuti + story; tanpa bar "Buat postingan". Geser dari tepi kiri = menu pintasan.
+Video pendek: tab Mengikuti/Untuk Kamu putih, LIVE kiri atas, suara default nyala (iPhone: ketuk sekali), suka/komentar/simpan/posting ulang/bagikan.
+Buat konten (tombol +): pilih foto/video lalu edit teks, stiker (geser), crop, potong & matikan suara video, audiens, bagikan. Batas 16 MB dihapus (server 1 GB/berkas).
+Komentar & bagikan: lembar bawah ala TikTok. Bagikan: kirim ke teman (chat), WhatsApp, salin tautan, Lainnya; jumlah dibagikan dihitung server.
+Posting ulang: 1 orang = 1 hitungan; notifikasi suka, simpan, posting ulang, bagikan ke pemilik.
+Profil: foto asli, cover, edit foto/cover/hapus, tombol menu = pengaturan, tab Disimpan. Edit profil lama tidak muncul (tertutup) -> diganti.
+Suka/simpan/komentar tidak lagi loncat ke atas.
+Chat: balas ala WA (bar kutipan + kutipan di balon), tombol 1x tidak menggandakan, tanpa kotak hijau, keyboard iPhone tidak menggeser bar, latar chat disimpan (dikecilkan) + bisa dihapus.
+BELUM: privasi akun/daftar pengikut, daftar pengikut diklik, tayangan profil, sorotan, penonton story, studio LIVE, chat grup, posting Channel, QR, ganti sandi, tab Disukai/Posting ulang.

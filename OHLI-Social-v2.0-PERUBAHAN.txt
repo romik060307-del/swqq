@@ -1,0 +1,36 @@
+OHLI SOCIAL SOURCE v2.1.1
+=======================
+
+Versi ini melanjutkan source v1.9. Fitur lama dan berkas JSON yang sudah ada dipertahankan.
+
+FITUR YANG DITAMBAHKAN
+- Privasi akun publik/privat dan pengaturan siapa yang dapat melihat followers, following, likes, dan saved.
+- Permintaan follow pada akun privat, daftar permintaan, terima/tolak.
+- Daftar pengikut/mengikuti yang dapat dibuka.
+- Tayangan profil dengan daftar akun pengunjung; dicatat maksimal sekali per akun per hari.
+- Tab profil Disukai dan Posting ulang, serta akses Disimpan dengan aturan privasi.
+- Story likes, statistik viewers/replay, dan Sorotan dari Story sendiri yang bertahan setelah Story kedaluwarsa.
+- QR kontak akun sendiri, pemindai QR browser bila didukung, dan input nomor manual sebagai fallback.
+- Ganti kata sandi dengan verifikasi kata sandi lama dan pengeluaran sesi perangkat lain.
+- Chat grup teks dan posting teks di Channel.
+- Perlindungan privasi diterapkan pada endpoint API, bukan hanya UI.
+- Penanganan tampilan profil privat dan perbaikan CSS responsif tambahan.
+
+BATASAN YANG PERLU DIKETAHUI
+- Chat grup dan Channel saat ini teks saja.
+- Suka Story menampilkan jumlah, belum menyediakan daftar penyuka.
+- Scanner QR bergantung dukungan BarcodeDetector; input nomor menjadi fallback.
+- LIVE masih WebRTC peer-to-peer, bukan SFU relay dan tidak dijamin untuk penonton banyak.
+- Perbaikan layar hitam iPhone belum dapat dipastikan tanpa uji iPhone fisik.
+- Data server tetap tersimpan lokal pada perangkat Android host dalam file JSON. Backup dan server selalu aktif perlu disiapkan terpisah.
+
+MEMBUAT APK
+1. Unggah file OHLI-Social-Source-v2.1.1.zip ke root repository GitHub.
+2. Pastikan workflow .github/workflows/build-apk.yml versi di dalam ZIP juga ikut di repository.
+3. Buka tab Actions lalu jalankan workflow "Build OHLI Social Server APK" atau push commit baru.
+4. Setelah selesai, unduh artifact bernama OHLI-Social-Server-APK.
+
+Build APK belum dapat dijalankan di lingkungan pembuatan source ini karena Android SDK dan Gradle tidak tersedia. GitHub Actions disiapkan untuk Java 17, Android SDK 35, dan Gradle 8.9.
+
+
+Patch v2.1.1: perbaikan overflow mobile, navigasi profil sendiri setelah melihat profil teman, story satu bar per akun dengan navigasi story lama, double-tap like, state follow di pencarian, centang chat server-side, menu edit/hapus chat melalui tekan lama, blokir pada profil/chat/media, topik tagar, serta pemulihan JSON dari file cadangan.

@@ -1,0 +1,48 @@
+OHLI SOCIAL v2.8.0 — PEMBARUAN UI, AUDIO, DAN AKSI DAFTAR CHAT
+============================================================
+
+Perbaikan yang ditargetkan dari screenshot:
+
+1. Pembaruan / composer status
+- Panel input Pembaruan memakai latar navy-gradien, border kontras, dan input yang lebih terbaca.
+- Teks panjang dapat membungkus dengan benar; kontrol audiens dan tujuan dapat turun baris di layar kecil.
+- Subjudul Pembaruan diperjelas.
+
+2. Navigasi chat
+- Setiap baris kontak/chat membawa identitas nomor tujuan pada data element-nya.
+- Handler klik menggunakan nomor dari baris yang ditekan agar ruang obrolan yang dibuka tetap sesuai.
+- Composer chat diposisikan normal di bawah area pesan dan disembunyikan ketika tidak berada di ruang chat.
+- Area pesan diberi flex/scroll yang benar pada tampilan mobile.
+
+3. Kontras tombol
+- Tombol tema/profil di header chat dan tombol notifikasi OHLI memakai latar dan batas yang kontras.
+- Tombol avatar/follow dan aksi sisi Reels memakai warna putih dengan shadow agar jelas di atas video.
+
+4. Ekstraksi audio dari video
+- Pengambilan audio tidak lagi memanggil video.play() pada elemen video tersembunyi setelah proses async.
+- File video dibaca dengan FileReader, trek audio didekode memakai Web Audio API, lalu direkam melalui MediaRecorder.
+- AudioContext dibuat/resume sedini mungkin pada interaksi pengguna untuk mengurangi NotAllowedError.
+- File hasil mengikuti format MediaRecorder yang didukung browser (mis. WebM/Opus); tidak dilakukan transkode paksa ke MP3/AAC.
+
+5. Aksi daftar obrolan
+- Geser kanan pada baris Chat: Tandai belum dibaca dan Sematkan/Lepas sematan.
+- Geser kiri: Info Kontak, Kunci Obrolan, Tambah Favorit, Tambah ke Daftar, Bersihkan Obrolan, Blokir/Buka blokir, Hapus Obrolan.
+- Tekan lama / klik kanan: Tandai belum dibaca, Arsipkan, Sematkan, Favorit, Daftar, Bersihkan, Bisukan, Hapus.
+- Mute menahan toast dan notifikasi desktop untuk pesan baru dari kontak yang dibisukan.
+
+Batasan perilaku yang perlu diketahui:
+- Sematkan, arsip, favorit, daftar, mute, kunci tampilan, bersihkan, dan hapus dari daftar disimpan lokal di browser/perangkat ini; tidak disinkronkan antarperangkat.
+- Bersihkan obrolan hanya menyembunyikan pesan di tampilan lokal. Pesan di server/perangkat lain tidak dihapus.
+- Hapus obrolan menyembunyikan percakapan dari daftar lokal sampai ada pesan baru; riwayat server tetap ada.
+- Kunci obrolan memakai PIN lokal untuk menutup tampilan. Ini bukan enkripsi dan tidak mengunci salinan pesan di server.
+- Ekstraksi audio memerlukan Web Audio API dan MediaRecorder. Codec video yang tidak didukung browser tidak dapat diekstrak.
+
+Versi Android:
+- versionCode: 19
+- versionName: 2.8.0
+
+Validasi:
+- Node.js syntax check untuk JavaScript eksternal dan inline berhasil.
+- Pemeriksaan keseimbangan kurung seluruh blok CSS berhasil.
+- ZIP source diuji integritasnya.
+- APK belum dibangun dan belum diuji pada perangkat fisik dalam lingkungan ini.

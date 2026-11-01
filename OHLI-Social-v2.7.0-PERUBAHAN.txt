@@ -1,0 +1,30 @@
+OHLI SOCIAL v2.7.0 — MOBILE UX, STORY, CHAT & QR FIXES
+====================================================
+
+Fokus: penggunaan web OHLI Social pada HP. Versi desktop dan struktur data pengguna yang sudah ada tetap dipertahankan.
+
+PERBAIKAN UTAMA
+1. Navigasi HP pada Video Pendek dipaksa menjadi satu baris lima ikon: Beranda, Jelajahi, Buat, Video, Profil. Bar atas disembunyikan saat halaman Reels agar area video lebih luas.
+2. Tombol notifikasi tersedia pada topbar dan overlay Reels, serta menampilkan badge jumlah notifikasi belum dibaca.
+3. Tombol kembali internal mempertahankan riwayat halaman OHLI; membuka chat dari profil tidak kehilangan halaman asal.
+4. Tombol + ikuti pada avatar kreator Reels mengikuti status follow server. Setelah berhasil mengikuti tombol + hilang; permintaan akun privat tampil sebagai status menunggu.
+5. API feed kini mengirim isFollowing/followRequested agar UI Reels tidak salah menampilkan tombol follow.
+6. Video Story lama yang tidak memiliki fileSize/mimeType tetap diarahkan ke endpoint media video berdasarkan mediaType. Kegagalan pemutaran menampilkan pesan dan tombol coba lagi, bukan progress diam di atas layar hitam.
+7. Menu Status dari Chat sekarang memiliki pilihan audiens (Kontak, Publik, Pengikut, Hanya saya) dan tujuan (Chat saja, OHLI Social saja, keduanya). Upload video galeri ikut mendukung pilihan tersebut.
+8. Pratinjau video Story pada daftar Status Chat menggunakan elemen video, bukan image.
+9. Story publik dapat dilihat semua akun OHLI kecuali akun yang diblokir. Story pengikut tetap memerlukan hubungan follow yang diterima; Story kontak tetap mengikuti kontak tersimpan.
+10. Pembacaan pesan dikirim ke server saat ruang chat dibuka. Status baca diperbarui oleh pengirim melalui polling; tanda pesan terbaca menggunakan warna biru.
+11. Composer Chat mobile menampilkan kontrol lampiran, VN, emoji, sekali lihat, stiker favorit, kolom pesan, dan kirim dalam satu baris responsif.
+12. QR profil memakai tautan web dengan parameter ohli_profile, sehingga pemindaian dengan kamera/aplikasi QR umum membuka profil di browser. Scanner menyediakan opsi kamera dan input manual kode/tautan/nomor.
+13. Tombol tutup modal dan kontrol Story dirapikan untuk layar kecil.
+
+KOMPATIBILITAS & BATASAN
+- Data chat, Story, kontak, dan akun lama tidak dihapus.
+- Audio autoplay bersuara dicoba setelah interaksi pengguna pertama karena browser Android/iOS dapat menolak autoplay dengan suara sebelum ada gesture. Website tidak dapat memaksa browser melewati kebijakan ini.
+- QR scanner kamera memerlukan HTTPS atau localhost dan izin kamera. Input manual tetap tersedia.
+- Jika video memakai codec yang tidak didukung browser, pengguna akan mendapat pesan gagal dan dapat mencoba ulang; codec video sumber perlu kompatibel dengan browser.
+- Build APK dan uji perangkat fisik belum dilakukan di lingkungan ini. Workflow GitHub Actions disesuaikan untuk memilih source ZIP v2.7.0.
+
+VERSI ANDROID
+- versionCode: 18
+- versionName: 2.7.0

@@ -1,0 +1,29 @@
+OHLI SOCIAL v3.2.0 — PENYELESAIAN FITUR TERTUNDA
+================================================
+
+Pembaruan inti
+--------------
+1. Riwayat aktivitas OHLI Social disimpan di server per akun untuk pencarian, profil, postingan, foto, video pendek, dan Story. Antrean lokal mengirim ulang aktivitas saat koneksi kembali; clientId membuat retry idempoten. Sesi/perangkat lain pada akun+host yang sama bisa membaca riwayat yang sama.
+2. Pin dan arsip Story teman tersimpan server-side. Data koleksi dapat dibaca dari sesi login lain, dan aksi unpin/unarchive/remove tersedia.
+3. View Once teks disembunyikan dari GET daftar chat penerima dan hanya dapat dibuka lewat klaim server pertama. Klaim kedua, termasuk dari sesi login terpisah, ditolak HTTP 410. Foto/suara dibatasi satu GET; video/dokumen mendukung Range pada kunci sesi acak pertama sampai 10 menit.
+4. Privasi nomor: daftar Social memakai /api/social/users dengan ID oh_…; daftar nomor /api/users dan resolusi Chat hanya memberikan nomor apabila Direct Message penerima mengizinkan dan tidak ada blokir. Pengecekan keberadaan nomor mengikuti aturan sama.
+5. Grup dan Channel diuji lewat smoke-test dua akun: join grup, pesan, polling satu suara aktif, follow Channel, siaran pemilik-only, reaksi emoji, dan penghapusan owner-only. Penghapusan grup/Channel ikut membersihkan pesan/post terkait.
+6. Penambahan endpoint hapus Story milik sendiri agar Story dapat dikelola dan data uji dibersihkan.
+
+Versi
+-----
+- Android versionCode: 23
+- Android versionName: 3.2.0
+- /health: 3.2.0
+- GitHub Actions memprioritaskan OHLI-Social-Source-v3.2.0.zip.
+
+Pemeriksaan source
+------------------
+- node --check tools/smoke-test.mjs
+- node --check app/src/main/assets/ohli-social.js
+- node tools/source-verify.mjs
+- Pemeriksaan skrip inline HTML dan kurung CSS melalui source-verify.
+
+Batas pengujian
+---------------
+Smoke test dua akun disertakan tetapi tidak dapat dieksekusi tanpa server hidup dan kredensial akun uji. APK belum dibangun pada lingkungan ini karena Android SDK/Gradle tidak tersedia. Tes dua HP nyata masih wajib sebelum dipakai umum. View Once tidak dapat mencegah screenshot/rekam layar/kamera eksternal. Seluruh sinkronisasi lintas perangkat memakai satu host Android yang sama, bukan arsitektur multi-server.

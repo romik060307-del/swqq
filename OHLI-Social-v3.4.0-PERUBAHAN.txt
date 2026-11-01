@@ -1,0 +1,83 @@
+OHLI SOCIAL v3.4.0 — PEMBARUAN TERARAH
+======================================
+
+Tujuan
+------
+Menambahkan fitur yang diminta pada media video, profil, komentar, LIVE,
+Chat, Story, dan tema tanpa membangun ulang website atau mengganti alur login,
+server, database JSON, maupun API inti yang sudah ada.
+
+Perubahan
+---------
+1. Download video ber-watermark
+   - Tombol Unduh mengikuti izin download yang ditetapkan pemilik postingan.
+   - Server memeriksa izin dan mengembalikan 403 bila download dinonaktifkan.
+   - Browser merender salinan unduhan dengan watermark OHLI dan username.
+   - Video feed dan file asli pada server tidak dimodifikasi.
+   - Format file hasil bergantung codec MediaRecorder yang tersedia (MP4/WebM).
+
+2. Tata video pada profil
+   - Pilihan Transparan dan Terbatas pada tab Media profil.
+   - Pilihan disimpan lokal pada browser/perangkat.
+
+3. Komentar dan stiker
+   - Balasan bertingkat menggunakan parentId.
+   - Tombol Balas dan tekan-tahan komentar membuka composer balasan.
+   - Like/unlike dan hitungan memakai endpoint server.
+   - Stiker bawaan, impor gambar, kirim sebagai komentar, dan koleksi favorit.
+   - Panel komentar menyesuaikan visualViewport saat keyboard mobile terbuka.
+
+4. LIVE
+   - Studio: judul, deskripsi, audience, izin kamera/mikrofon, pratinjau,
+     pergantian kamera, kualitas target, komentar, mulai dan akhiri.
+   - Penonton: tampilan fullscreen vertikal, komentar, like, follow host,
+     share, jumlah penonton, dan keluar.
+   - Menggunakan signaling WebRTC P2P yang telah ada di server.
+   - Batas saat ini enam penonton langsung; bukan SFU/relay skala besar.
+   - Komentar diperbarui melalui polling berkala.
+
+5. Chat, video, dan Story
+   - Chat baru terbuka pada pesan terbaru.
+   - Pesan baru mengikuti scroll hanya jika pengguna sebelumnya berada di bawah.
+   - Menu context/copy browser diblokir pada elemen video Social saja.
+   - Story pause saat ditekan dan resume dari posisi terakhir saat dilepas.
+
+6. Tema
+   - Pilihan Terang/Malam disimpan di localStorage perangkat.
+   - Mode malam mencakup Chat dan OHLI Social.
+   - Tema Terang tetap default dan tampilan lamanya dipertahankan.
+
+File utama yang diperbarui
+-------------------------
+- app/src/main/assets/index.html
+- app/src/main/assets/ohli-social.js
+- app/src/main/assets/ohli-social.css
+- app/src/main/java/com/rk/server/ServerService.java
+- app/build.gradle
+- .github/workflows/build-apk.yml
+- tools/source-verify.mjs
+- README.md
+- docs/API.md
+- docs/FEATURE-MATRIX.md
+- docs/V3.4-TEST-PLAN.md
+
+Pemeriksaan
+-----------
+- 77/77 pemeriksaan statis pada tools/source-verify.mjs lulus.
+- node --check untuk ohli-social.js, source-verify.mjs, dan smoke-test.mjs lulus.
+- Arsip ZIP diperiksa dengan zip -T.
+- APK belum dikompilasi di lingkungan pengerjaan ini karena Gradle dan Android
+  SDK tidak tersedia.
+- Tes integrasi dua akun dan tes kamera/MediaRecorder/LIVE nyata belum dijalankan.
+
+Batasan yang perlu diketahui
+----------------------------
+- Watermark memakai Canvas + MediaRecorder pada browser. Codec MP4/WebM dan
+  pemeliharaan audio berbeda antarbrowser; terutama Safari/iOS perlu diuji.
+- LIVE tetap WebRTC peer-to-peer. Untuk skala besar/koneksi yang lebih andal
+  dibutuhkan TURN/SFU/relay dan kapasitas server yang sesuai.
+- Pilihan tema dan layout video profil tersimpan lokal per perangkat.
+- Backend tetap menyimpan data JSON pada satu perangkat host; belum menjadi
+  infrastruktur multi-server produksi.
+
+Jangan menyebut versi ini bebas bug sebelum APK diuji pada perangkat nyata.

@@ -1,0 +1,39 @@
+OHLI SOCIAL v2.6.0 — CATATAN PERUBAHAN
+
+Fokus utama: perbaikan pengalaman HP mengikuti referensi TikTok/Instagram, tanpa menghilangkan desain Story fullscreen yang sudah disukai pengguna.
+
+1. Reels di HP
+- Header aplikasi tidak lagi mengambil tinggi layar ketika halaman Video Pendek dibuka.
+- Video menggunakan seluruh area vertikal; tab Mengikuti/Untuk Kamu menjadi overlay di atas video.
+- Navigasi bawah tetap satu baris dengan lima ikon: Beranda, Jelajahi, Buat, Video, Profil. Urutan ditentukan menggunakan grid-column eksplisit.
+- Mode transparan menghilangkan tinggi bar navigasi dari layout dan menempatkannya di atas video dengan latar 100% transparan.
+
+2. Feed Beranda HP
+- Lima aksi Suka, Komentar, Simpan, Posting ulang, dan Bagikan disusun dalam satu baris lima kolom, dengan ikon dan label kecil agar tetap terbaca.
+- Video feed tetap memakai IntersectionObserver; satu video aktif pada satu waktu dan video lain dijeda.
+
+3. Story
+- Viewer fullscreen yang sudah ada dipertahankan. Tidak ada perubahan desain utama Story.
+- Progress bar menjadi segmen per Story/klip dari akun yang sedang ditonton. Dua klip pada akun yang sama menampilkan dua segmen; tiga klip menampilkan tiga segmen.
+- Selesai klip terakhir berpindah ke akun berikutnya; kembali dari klip pertama dapat membuka akun sebelumnya.
+- Video Story mencoba autoplay dengan suara asli.
+
+4. Audio dan musik
+- Video di Beranda, Reels, dan Story mencoba autoplay dengan suara jika browser mengizinkan. Jika browser menolak autoplay bersuara, video akan tetap berjalan dalam keadaan mute. Sentuhan/klik pertama membuka audio untuk sesi browser dan membantu video aktif berpindah ke suara. Pembatasan kebijakan autoplay browser/OS tidak dapat dihilangkan dari kode web.
+- Ikon speaker disinkronkan dengan keadaan mute video. Jika tap pertama dilakukan pada tombol speaker, tindakan tersebut mengaktifkan suara (bukan langsung menonaktifkannya).
+- Audio asli pada baris musik video feed/Reels dapat diklik untuk membuka detail sumber. Detail menyediakan pratinjau, Simpan suara, dan Gunakan audio ini. Audio diambil dari video sumber dan diunggah sebagai audio katalog untuk pemakaian ulang.
+
+5. Profil dan tema
+- Sorotan ditampilkan sebagai lingkaran tepat di bawah bio profil; tombol Baru muncul untuk pemilik profil.
+- Tema opsional Liquid Glass tersedia dari Pengaturan dan tidak menggantikan mode terang/gelap.
+
+6. Metadata dan workflow
+- Android versionCode 17, versionName 2.6.0. Health endpoint melaporkan 2.6.0.
+- GitHub Actions memilih OHLI-Social-Source-v2.6.0.zip terlebih dahulu, lalu fallback ke arsip versi lama.
+
+PENGUJIAN
+- `node --check` pada semua file JS: LULUS.
+- Syntax-check 2 blok JavaScript inline HTML: LULUS.
+- Keseimbangan tanda kurung kurawal file CSS: LULUS.
+- Integritas ZIP: diuji setelah pembuatan.
+- APK dan uji pada HP fisik: BELUM dilakukan; build melalui GitHub Actions tetap diperlukan.

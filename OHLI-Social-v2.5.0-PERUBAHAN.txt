@@ -1,0 +1,18 @@
+OHLI SOCIAL v2.5.0 — CATATAN PERUBAHAN
+
+Perbaikan UI mobile berdasarkan referensi pengguna:
+1. Video Pendek HP memakai stage penuh layar; navigasi bawah overlay di atas video.
+2. Mode Tema Transparan menghilangkan latar/bidang gelap navbar (ikon putih tetap terlihat).
+3. Video di Beranda autoplay saat minimal 62% terlihat; video lain dijeda agar tidak bertumpuk. Browser biasanya memulai autoplay dalam keadaan mute.
+4. Story dibuka fullscreen; kontrol video bawaan dihilangkan. Tap separuh kiri = Story sebelumnya, tap separuh kanan = Story berikutnya.
+5. Suka, Komentar, Simpan, Posting ulang, dan Bagikan di kartu Beranda HP berada dalam satu baris horizontal.
+6. Pemilih audio editor menyediakan empat tab: Musik tren, Disimpan, Dari video perangkat, dan Dari file. Musik tren diurutkan berdasarkan jumlah pemakaian di posting OHLI.
+
+Kompatibilitas:
+- Desktop/laptop dipertahankan dengan layout yang sudah ada.
+- Autoplay audio tetap dibatasi kebijakan browser; pengguna bisa menyalakan suara setelah interaksi.
+- Ekstraksi video mengikuti API MediaRecorder/Web Audio dan codec browser.
+- API/backend v2.4.0 dipertahankan; versi ini mengubah UI dan interaksi frontend.
+
+Versi Android: versionCode 16, versionName 2.5.0.
+Pengecekan statis: lihat README. Build APK dan uji perangkat fisik belum dilakukan di lingkungan ini.

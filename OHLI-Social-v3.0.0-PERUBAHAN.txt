@@ -1,0 +1,48 @@
+OHLI SOCIAL v3.0.0 — PERUBAHAN SUMBER
+
+Versi Android: versionCode 21 / versionName 3.0.0
+
+YANG DITUNTASKAN DARI DAFTAR SEBELUMNYA
+
+1. Riwayat aktivitas Social di server
+- Pencarian, profil, postingan, foto, video pendek dan Story dicatat per akun pada ohli-activity-history.json.
+- Riwayat dapat dibaca dari perangkat/browser lain yang login ke server host dan akun yang sama.
+- Ada aksi hapus seluruh riwayat; daftar dibatasi 500 baris per permintaan, penyimpanan maksimal 50.000 catatan.
+
+2. Pin dan arsip Story teman
+- Endpoint /api/status/collections menyimpan pin/arsip, lepas pin, keluarkan dari arsip dan hapus koleksi.
+- Daftar koleksi dibatasi ke pemilik akun, tidak menampilkan nomor internal pemilik/asal Story.
+- Story harus dikoleksi saat masih dapat diakses. Media tersimpan tetap tergantung berkas media pada perangkat host.
+
+3. Pesan sekali lihat 1×
+- GET /api/messages menyembunyikan isi teks 1× dari penerima. Isi hanya diberikan pada klaim pertama melalui POST /api/messages/once/open. Klaim kedua ditolak HTTP 410.
+- Foto dan suara 1× memakai klaim server satu kali. Video dan dokumen memakai kunci sesi acak 128-bit; permintaan Range lanjutan hanya diterima dari sesi yang sama selama 10 menit agar video/unduhan tetap dapat berjalan. Cache respons media 1× dimatikan.
+- Tombol buka 1× harus ditekan pengguna, bukan otomatis saat percakapan dirender.
+- Ini tidak mencegah screenshot, rekaman layar, kamera eksternal, atau salinan yang dibuat saat media sedang terbuka. Tidak ada klaim anti-screenshot atau enkripsi end-to-end.
+
+4. Privasi nomor dan identitas sosial
+- Endpoint Social menampilkan Social ID acak stabil berawalan oh_… alih-alih nomor telepon. Ini mencakup profil, pencarian, daftar mengikuti/pengikut, notifikasi, Story, Live, musik, grup dan Channel. Penyamaran berlaku juga untuk pemilik konten sendiri serta daftar penulis, komentar, like, repost dan reaksi; respons komentar, sorotan, dan unggahan Story juga memakai ID sosial, bukan nomor akun.
+- Nomor tetap disimpan sebagai kunci privat server dan dipakai alur Chat, QR/tambah kontak serta data milik akun sendiri. /api/chat/resolve hanya mengembalikan nomor jika Direct Message diizinkan dan tidak ada blokir.
+- Pilihan directMessages dan activity (status online) diterapkan di server: everyone, friends, private.
+
+5. Grup dan Channel
+- Poll grup mendukung 2–6 opsi dan satu pilihan aktif per anggota. Validasi opsi dilakukan sebelum mutasi suara, sehingga input opsi palsu tidak menghapus suara sebelumnya.
+- Channel satu arah dapat memiliki reaksi 👍 ❤️ 🔥 👏. Server memeriksa akses Channel privat sebelum menyimpan reaksi.
+- Respons pesan grup/voting dan Channel mengembalikan Social ID, bukan nomor internal.
+
+6. Ketahanan dan dokumentasi
+- File JSON riwayat dan koleksi dimuat saat service mulai serta disimpan dengan mekanisme temp/backup yang dipakai data server lain.
+- tools/source-verify.mjs menjalankan 31 pemeriksaan statis source.
+- tools/smoke-test.mjs tetap tersedia untuk pengujian sejumlah alur sosial dengan dua akun uji pada server yang aktif.
+
+HASIL PEMERIKSAAN PADA LINGKUNGAN INI
+- Lulus: sintaks ohli-social.js, 2 skrip inline HTML, keseimbangan blok CSS, dan 31 pemeriksaan source.
+- Pemeriksaan javac dapat mem-parse file Java tetapi tidak dapat mengompilasi karena Android SDK/Android framework dan dependensi build tidak terpasang.
+- APK belum dibangun; build harus dijalankan di GitHub Actions dengan Android SDK.
+- Uji runtime dua akun pada dua perangkat belum dilakukan. Jalankan setelah APK terpasang pada host, jangan gunakan akun/kredensial utama untuk pengujian destruktif.
+
+BATASAN YANG MASIH ADA
+- Riwayat dan koleksi tersimpan pada satu perangkat Android host, bukan cloud multi-server. Lintas perangkat bekerja hanya jika memakai host dan akun yang sama.
+- Pesan sekali lihat membatasi pengambilan ulang melalui API OHLI; tidak dapat mencegah screenshot/perekaman layar.
+- Backup terenkripsi off-device, OTP, push notification ketika aplikasi tertutup, enkripsi end-to-end yang diaudit, SQL produksi, object storage dan SFU/TURN Live masih memerlukan infrastruktur tambahan.
+- Beberapa fitur grup lanjutan seperti lampiran, reply pesan, role admin granular dan panggilan grup belum tersedia.

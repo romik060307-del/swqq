@@ -1,0 +1,31 @@
+OHLI SOCIAL FRONTEND UPDATE v2.3.0
+
+CAKUPAN
+Pembaruan ini hanya mengubah frontend OHLI Social dan dokumentasi. File Java server Android, API yang sudah ada, skema database, serta alur penyimpanan server dipertahankan.
+
+PERBAIKAN FRONTEND
+1. Reels: jarak antartombol aksi diperbesar, respons sentuh diberi animasi, dan susunan desktop >=1024px menjadi horizontal di bagian bawah video.
+2. Reels: IntersectionObserver memakai ambang visibilitas 80%; video lain dijeda saat satu video menjadi aktif. Autoplay dapat dimatikan. Putar manual tetap tersedia ketika autoplay dimatikan.
+3. Suara Reels: pilihan ON/OFF tersimpan lokal. Browser modern dapat memblokir autoplay dengan suara; pengguna perlu mengetuk tombol speaker/berinteraksi terlebih dahulu. Tidak ada cara frontend yang sah untuk memaksa browser memutar audio tanpa izin kebijakan autoplay.
+4. Reels: tahan area kanan video selama sekitar 420 ms untuk mempercepat playback menjadi 2x dan menampilkan indikator 2x; ketika dilepas, kecepatan kembali 1x.
+5. Reels: label audio menampilkan judul jika metadata audio tersedia, atau label Audio asli jika tidak tersedia.
+6. Story: viewer fullscreen yang sudah ada tetap digunakan; formulir Kirim pesan mengirim balasan ke pemilik Story melalui API chat privat yang sudah ada.
+7. Story: analitik penonton diurutkan dari frekuensi replay terbanyak dan menampilkan nilai seperti 3x. Server sebelumnya sudah menyimpan penghitung replay.
+8. Pengaturan: tambahan toggle lokal untuk suara Reels, autoplay, transparansi navigasi bawah pada Reels, serta Anti-zoom. Zoom browser kembali diizinkan ketika Anti-zoom dimatikan.
+9. QR: panduan kegagalan kamera lebih spesifik untuk izin ditolak, kamera tidak ditemukan/sibuk, dan secure context; input nomor manual tetap menjadi fallback.
+
+BATASAN YANG SENGAJA TIDAK DIPALSUKAN
+- Edit/hapus komentar, hapus komentar oleh kreator, serta nonaktifkan komentar membutuhkan endpoint dan pemeriksaan hak akses server. Source v2.2.0 hanya menyediakan endpoint tambah komentar; backend tidak diubah pada pembaruan frontend ini.
+- Katalog musik lintas-video, halaman detail audio dan video terkait, favorit audio lintas perangkat, serta proses Gunakan Audio yang benar-benar mencampur trek memerlukan API audio, penyimpanan, pipeline pemrosesan/transcoding, dan pemeriksaan hak penggunaan musik. Label audio di Reels hanya membaca metadata yang sudah tersedia; jika tidak ada, label menunjukkan Audio asli.
+- Ekstraksi trek MP3/AAC dari video galeri tidak dilakukan dengan HTML5/Canvas saja. Diperlukan encoder/decoder media terintegrasi (misalnya ffmpeg.wasm) dan dukungan proses ekspor; fitur tersebut belum ditambahkan agar tidak memberikan tombol yang tidak berfungsi.
+- Suka Story menggunakan endpoint lama, tetapi endpoint server saat ini belum membuat notifikasi suka Story secara khusus.
+- Toggle tema transparan, suara, autoplay, dan Anti-zoom tersimpan pada localStorage browser/perangkat, bukan disinkron antarperangkat.
+
+PENGUJIAN YANG DILAKUKAN
+- node --check app/src/main/assets/ohli-social.js
+- Ekstraksi dan node --check seluruh blok JavaScript inline dari app/src/main/assets/index.html
+- Verifikasi diff bahwa ServerService.java, MainActivity.java, AndroidManifest.xml, dan database migrations tidak berubah.
+
+PENGUJIAN YANG MASIH DIPERLUKAN
+- Uji sentuhan/gesture 2x, audio, rasio layar, kamera QR, dan navigasi transparan pada HP Android/iPhone nyata.
+- Build APK melalui GitHub Actions sesuai petunjuk README.

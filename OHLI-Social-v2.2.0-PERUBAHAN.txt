@@ -1,0 +1,31 @@
+OHLI SOCIAL SOURCE v2.2.0
+Android versionCode: 14
+Android versionName: 2.2.0
+
+PERUBAHAN UTAMA
+1. Mobile UI: navigasi bawah 6 pintasan, overflow horizontal dibatasi, tombol aksi feed/reels dirapikan, dan menu tambahan chat terlihat di layar HP. Zoom browser tetap diizinkan.
+2. Rekomendasi akun: urutan diacak saat diminta, foto/nama dapat ditekan untuk membuka profil, dan tombol Acak memuat ulang rekomendasi.
+3. Story: lingkaran akun lain membedakan Story belum/sudah dilihat berdasarkan data server; foto/teks berpindah otomatis, video lanjut setelah selesai; viewer mendukung tombol, tap sisi, dan swipe; header pembuat membuka profil.
+4. Editor Story/Post: pintasan kamera, teks/stiker, crop, rentang putar video, mute. Draf caption/teks tersimpan lokal dan dapat dilanjutkan dari tab Draf profil; media dipilih ulang.
+5. Video Pendek: pencarian dari Reels mempunyai navigasi kembali ke Reels.
+6. Tema: warna aksen, aksen kedua, teks, latar, kartu, ukuran teks, dan kerapatan dapat dikustomisasi lokal. Tema bawaan terang/gelap tetap ada.
+7. Chat: pilih beberapa foto/video/dokumen sekaligus; proses mengirim satu per satu dan menampilkan jumlah berhasil. Pesan suara dapat diputar 1×, 1,5×, atau 2×. Pintasan Arsip Chat tersedia di header HP; chat arsip dapat dibuka/dipulihkan.
+8. Server: penambahan properti viewedByMe/seenAt pada GET status serta penyimpanan metadata editor Story pada upload status. Tidak mengubah format JSON lama atau merombak backend.
+
+YANG MASIH MEMERLUKAN BACKEND / INFRASTRUKTUR
+- Musik lintas-video, mengambil audio galeri, katalog audio, halaman detail suara, video terkait, favorit audio dan proses mixing/transcoding belum aktif. Server memerlukan API dan pipeline audio serta pemeriksaan hak penggunaan musik.
+- FYP masih berdasarkan logika feed/engagement dan tagar yang tersedia; belum ada model rekomendasi personal canggih dari riwayat tontonan.
+- Draf belum disinkron antarperangkat; draf menyimpan teks/caption, bukan file media.
+- Arsip chat dan tema personal masih lokal pada browser/perangkat.
+- Pemindaian QR memerlukan HTTPS atau localhost dan izin kamera. Pada HTTP IP lokal browser dapat memblokir kamera; masukkan nomor sebagai fallback.
+- Editor menyimpan metadata potong/crop/mute untuk playback, bukan merender ulang file video secara permanen.
+
+CARA BUILD APK
+1. Unggah `OHLI-Social-Source-v2.2.0.zip` ke root repository GitHub, atau unggah seluruh isi folder proyek ke root.
+2. Pastikan `.github/workflows/build-apk.yml` ada di root repository.
+3. Jalankan Actions > Build OHLI Social Server APK > Run workflow.
+4. Unduh artifact `OHLI-Social-Server-APK` setelah workflow berhasil.
+
+PENGUJIAN
+- `node --check app/src/main/assets/ohli-social.js` dan syntax-check inline JS dapat dijalankan lokal.
+- Build APK, pengujian kamera/mikrofon, gesture Story, zoom, upload batch, dan layout pada Android/iPhone tetap harus diuji di perangkat nyata.
